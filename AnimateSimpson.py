@@ -1,5 +1,3 @@
-from typing import Any, Callable, Tuple
-
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 
@@ -8,10 +6,9 @@ import NumInt
 import Plotting
 
 
-class AnimateTrapezoid(animation.FuncAnimation):
+class AnimateSimpson(animation.FuncAnimation):
     def __init__(self, fig=None, ax=None,
                  frames=None, duration=1000, **kwargs):
-        # self.line = None
         if fig is None:
             if ax is None:
                 fig, ax = plt.subplots()
@@ -52,10 +49,15 @@ class AnimateTrapezoid(animation.FuncAnimation):
 
     def animate_trapezoid(self, i):
         plt.cla()
-        area, x, function_results = NumInt.NumInt.trapezoid(self.func, self.a, self.b, i + 1)
-        x_true, func_res_true = HelperFunc.HelperFunc.function_true(self.func, self.a, self.b)
+        area, x, function_results = \
+            NumInt.NumInt.simpson(
+                self.func, self.a, self.b, 2 * (i + 1))
+        x_true, func_res_true = \
+            HelperFunc.HelperFunc.function_true(
+                self.func, self.a, self.b)
         Plotting.Plotting.plot_engine(
             self.ax, self.title, x_true,
-            func_res_true, x, function_results, x,
-            x[::i // 5 if i // 5 != 0 else 1])
-# anim = mpl.animation.FuncAnimation(fig, animate_trapezoid, init_func=init, frames=n - 1, interval=500)
+            func_res_true, x, function_results, x[::10],
+            x[::10 * (i // 5 if i // 5 != 0 else 1)])
+    #
+    # anim = mpl.animation.FuncAnimation(fig, animate_trapezoid, init_func=init, frames=n - 1, interval=500)

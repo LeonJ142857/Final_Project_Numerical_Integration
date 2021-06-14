@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
+
 import HelperFunc
+
 
 class Plotting:
     @staticmethod
@@ -16,6 +19,7 @@ class Plotting:
         ax.grid(which='major', alpha=1.0)
         ax.fill_between(X, funcResults)
         ax.legend()
+        plt.show()
 
     @staticmethod
     def plot_engine_riemann(ax, title, XTrue, funcResTrue, X, funcResults,
@@ -32,6 +36,7 @@ class Plotting:
         ax.set_xticks(Xminor, minor=True)
         ax.grid(which='minor', alpha=0.3)
         ax.grid(which='major', alpha=1.0)
+        plt.show()
 
     @classmethod
     def static_plot_riemann(cls, riemann, title, m=1, alignment='center'):
@@ -65,4 +70,5 @@ class Plotting:
                     X[::mult], XMajor)
         #     np.concatenate((interpolation_X[::10], np.array([interpolation_X[-1]]))
         true_area = func_integrate(b) - func_integrate(a)
+        plt.show()
         return area, true_area
